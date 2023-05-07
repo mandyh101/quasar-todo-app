@@ -13,7 +13,7 @@
       </q-toolbar>
       <div class="q-px-lg q-pt-xl q-md-md q-gutter-sm">
         <div class="text-h3">Things to do</div>
-        <div class="text-sibtitle1">Monday, 7 May 2023</div>
+        <div class="text-sibtitle1">{{ todaysDate }}</div>
       </div>
       <q-img
         class="header-image absolute-top"
@@ -41,55 +41,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import EssentialLink, {
-  EssentialLinkProps,
-} from 'components/EssentialLink.vue';
+import { ref, computed } from 'vue';
+import { date } from 'quasar';
 
-const essentialLinks: EssentialLinkProps[] = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev',
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework',
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev',
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev',
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev',
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev',
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev',
-  },
-];
+const todaysDate = computed(() => {
+  let timeStamp = Date.now();
+  return date.formatDate(timeStamp, 'dddd D MMMM');
+});
 
 const leftDrawerOpen = ref(false);
 
@@ -104,5 +62,6 @@ function toggleLeftDrawer() {
   height: 100%;
   z-index: -1;
   opacity: 0.5;
+  filter: grayscale(100%);
 }
 </style>
