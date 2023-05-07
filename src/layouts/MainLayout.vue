@@ -11,7 +11,7 @@
           @click="toggleLeftDrawer"
         />
       </q-toolbar>
-      <div class="q-px-lg q-pt-xl q-md-md q-gutter-sm">
+      <div class="q-px-lg q-pt-md q-mb-md q-gutter-sm">
         <div class="text-h3">Things to do</div>
         <div class="text-sibtitle1">{{ todaysDate }}</div>
       </div>
@@ -22,16 +22,55 @@
       />
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
-        <q-item-label header> Essential Links </q-item-label>
+    <q-drawer
+      v-model="leftDrawerOpen"
+      show-if-above
+      :width="200"
+      :breakpoint="500"
+      overlay
+      bordered
+      :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'"
+    >
+      <div class="">
+        <div class="text-weight-bold text-h4 q-ml-md q-my-sm text-primary">
+          Hello Mandy!
+        </div>
+      </div>
+      <q-scroll-area class="fit">
+        <q-list padding class="menu-list">
+          <q-item clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="inbox" />
+            </q-item-section>
 
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
+            <q-item-section> Inbox </q-item-section>
+          </q-item>
+
+          <q-item active clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="star" />
+            </q-item-section>
+
+            <q-item-section> Star </q-item-section>
+          </q-item>
+
+          <q-item clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="send" />
+            </q-item-section>
+
+            <q-item-section> Send </q-item-section>
+          </q-item>
+
+          <q-item clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="drafts" />
+            </q-item-section>
+
+            <q-item-section> Drafts </q-item-section>
+          </q-item>
+        </q-list>
+      </q-scroll-area>
     </q-drawer>
 
     <q-page-container>
