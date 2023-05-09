@@ -25,7 +25,7 @@
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
-      :width="250"
+      :width="300"
       :breakpoint="600"
       overlay
       bordered
@@ -38,17 +38,23 @@
           Hello Mandy!
         </div>
       </div>
-      <q-scroll-area class="fit">
-        <q-list padding class="menu-list">
-          <q-item clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="task" />
-            </q-item-section>
 
-            <q-item-section> All todos </q-item-section>
-          </q-item>
-        </q-list>
-      </q-scroll-area>
+      <q-list padding class="menu-list">
+        <q-item to="/" clickable v-ripple>
+          <q-item-section avatar>
+            <q-icon name="task" />
+          </q-item-section>
+
+          <q-item-section> All todos </q-item-section>
+        </q-item>
+        <q-item to="/about" clickable v-ripple>
+          <q-item-section avatar>
+            <q-icon name="information" />
+          </q-item-section>
+
+          <q-item-section> About </q-item-section>
+        </q-item>
+      </q-list>
     </q-drawer>
 
     <q-page-container>
