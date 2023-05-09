@@ -40,14 +40,14 @@
       </div>
 
       <q-list padding class="menu-list">
-        <q-item to="/" clickable v-ripple>
+        <q-item to="/" exact clickable v-ripple>
           <q-item-section avatar>
             <q-icon name="task" />
           </q-item-section>
 
           <q-item-section> All todos </q-item-section>
         </q-item>
-        <q-item to="/about" clickable v-ripple>
+        <q-item to="/about" exact clickable v-ripple>
           <q-item-section avatar>
             <q-icon name="information" />
           </q-item-section>
