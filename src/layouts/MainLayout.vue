@@ -25,14 +25,16 @@
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
-      :width="200"
-      :breakpoint="500"
+      :width="250"
+      :breakpoint="600"
       overlay
       bordered
       :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'"
     >
-      <div class="">
-        <div class="text-weight-bold text-h4 q-ml-md q-my-sm text-primary">
+      <div>
+        <div
+          class="text-weight-bold text-h3 q-px-md q-mt-xl q-pt-lg text-primary"
+        >
           Hello Mandy!
         </div>
       </div>
@@ -40,41 +42,20 @@
         <q-list padding class="menu-list">
           <q-item clickable v-ripple>
             <q-item-section avatar>
-              <q-icon name="inbox" />
+              <q-icon name="task" />
             </q-item-section>
 
-            <q-item-section> Inbox </q-item-section>
-          </q-item>
-
-          <q-item active clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="star" />
-            </q-item-section>
-
-            <q-item-section> Star </q-item-section>
-          </q-item>
-
-          <q-item clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="send" />
-            </q-item-section>
-
-            <q-item-section> Send </q-item-section>
-          </q-item>
-
-          <q-item clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="drafts" />
-            </q-item-section>
-
-            <q-item-section> Drafts </q-item-section>
+            <q-item-section> All todos </q-item-section>
           </q-item>
         </q-list>
       </q-scroll-area>
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <!-- keep alive will preserve changes made on a page if you switch pages -->
+      <keep-alive>
+        <router-view />
+      </keep-alive>
     </q-page-container>
   </q-layout>
 </template>
