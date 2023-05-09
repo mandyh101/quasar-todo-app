@@ -1,5 +1,5 @@
 <template>
-  <q-page class="">
+  <q-page class="q-pa-lg">
     <div class="text-h4">Your tasks</div>
     <example-component
       title="Example component"

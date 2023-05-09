@@ -1,5 +1,5 @@
 <template>
-  <q-page class="">
+  <q-page class="q-pa-lg">
     <div class="text-h4">About</div>
   </q-page>
 </template>
