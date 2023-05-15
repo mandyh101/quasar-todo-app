@@ -14,6 +14,7 @@
             :key="task.title"
             v-ripple
             @click="toggleTask(task)"
+            :class="{ 'done bg-green-1': task.done }"
             clickable
           >
             <q-item-section avatar>
@@ -25,6 +26,9 @@
             </q-item-section>
             <q-item-section>
               <q-item-label>{{ task.title }}</q-item-label>
+            </q-item-section>
+            <q-item-section v-if="task.done">
+              <q-button class="text-red-5" @click="deleteTask">X</q-button>
             </q-item-section>
           </q-item>
         </q-list>
@@ -63,4 +67,18 @@ const tasks = ref(<Task[]>[
 const toggleTask = (task: Task) => {
   task.done = !task.done;
 };
+
+const deleteTask = (task: Task) => {
+  console.log(task);
+  //TODO delete the task from the tasks array
+};
 </script>
+
+<style lang="scss">
+.done {
+  .q-item__label {
+    text-decoration: line-through;
+    color: #bbb;
+  }
+}
+</style>
