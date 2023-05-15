@@ -58,10 +58,7 @@
     </q-drawer>
 
     <q-page-container>
-      <!-- keep alive will preserve changes made on a page if you switch pages -->
-      <keep-alive>
-        <router-view />
-      </keep-alive>
+      <router-view />
     </q-page-container>
   </q-layout>
 </template>
