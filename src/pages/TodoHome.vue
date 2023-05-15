@@ -1,43 +1,66 @@
 <template>
-  <q-page class="q-pa-lg">
+  <q-page class="q-pa-lg bg-grey-1 column">
     <div class="text-h4">Your tasks</div>
-    <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component>
+    <div class="q-pa-md">
+      <div class="q-gutter-sm">
+        <q-list separator class="bg-white">
+          <!--
+        Rendering a <label> tag (notice tag="label")
+        so QCheckboxes will respond to clicks on QItems to
+        change Toggle state.
+      -->
+          <q-item
+            v-for="task in tasks"
+            :key="task.title"
+            v-ripple
+            @click="toggleTask(task)"
+            clickable
+          >
+            <q-item-section avatar>
+              <q-checkbox
+                v-model="task.done"
+                color="primary"
+                class="no-pointer-events"
+              />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>{{ task.title }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </div>
+
+      <div class="q-px-sm q-mt-sm">
+        Your selection is: <strong>{{}}</strong>
+      </div>
+    </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
-import { Todo, Meta } from 'components/models';
-import ExampleComponent from 'components/ExampleComponent.vue';
 import { ref } from 'vue';
 
-const todos = ref<Todo[]>([
+interface Task {
+  title: string;
+  done: boolean;
+}
+
+const tasks = ref(<Task[]>[
   {
-    id: 1,
-    content: 'ct1',
+    title: 'Get bananas',
+    done: false,
   },
   {
-    id: 2,
-    content: 'ct2',
+    title: 'Make cake with bananas',
+    done: true,
   },
   {
-    id: 3,
-    content: 'ct3',
-  },
-  {
-    id: 4,
-    content: 'ct4',
-  },
-  {
-    id: 5,
-    content: 'ct5',
+    title: 'Eat banana cake',
+    done: false,
   },
 ]);
-const meta = ref<Meta>({
-  totalCount: 1200,
-});
+
+const toggleTask = (task: Task) => {
+  task.done = !task.done;
+};
 </script>
