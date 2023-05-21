@@ -42,6 +42,23 @@
           </q-item>
         </q-list>
       </div>
+      <q-dialog v-model="confirm" persistent>
+        <q-card>
+          <q-card-section class="row items-center">
+            <q-avatar
+              icon="signal_wifi_off"
+              color="primary"
+              text-color="white"
+            />
+            <span class="q-ml-sm">Delete this task?</span>
+          </q-card-section>
+
+          <q-card-actions align="right">
+            <q-btn flat label="Cancel" color="grey-5" v-close-popup />
+            <q-btn flat label="Delete it!" color="primary" v-close-popup />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
 
       <div class="q-px-sm q-mt-sm">
         Your selection is: <strong>{{}}</strong>
@@ -52,11 +69,16 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useQuasar } from 'quasar';
+
+const $q = useQuasar();
 
 interface Task {
   title: string;
   done: boolean;
 }
+
+const confirm = ref(<boolean>false);
 
 const tasks = ref(<Task[]>[
   {
@@ -77,8 +99,26 @@ const toggleTask = (task: Task) => {
   task.done = !task.done;
 };
 
+const confirmDelete = (index: number) => {
+  $q.dialog({
+    title: 'Confirm',
+    message: 'Delete this task?',
+    cancel: true,
+    persistent: true,
+  })
+    .onOk(() => {
+      tasks.value.splice(index, 1);
+    })
+    .onCancel(() => {
+      // console.log('>>>> Cancel')
+    })
+    .onDismiss(() => {
+      // console.log('I am triggered on both OK and Cancel')
+    });
+};
+
 const deleteTask = (index: number) => {
-  tasks.value.splice(index, 1);
+  confirmDelete(index);
 };
 </script>
 
