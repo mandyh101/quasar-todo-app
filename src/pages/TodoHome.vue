@@ -10,8 +10,8 @@
         change Toggle state.
       -->
           <q-item
-            v-for="task in tasks"
-            :key="task.title"
+            v-for="(task, index) in tasks"
+            :key="index"
             v-ripple
             @click="toggleTask(task)"
             :class="{ 'done bg-green-1': task.done }"
@@ -35,7 +35,7 @@
                 dense
                 color="primary"
                 class="text-red-5"
-                @click="deleteTask(task)"
+                @click.stop="deleteTask(index)"
                 icon="delete"
               />
             </q-item-section>
@@ -77,9 +77,8 @@ const toggleTask = (task: Task) => {
   task.done = !task.done;
 };
 
-const deleteTask = (task: Task) => {
-  console.log(task);
-  //TODO delete the task from the tasks array
+const deleteTask = (index: number) => {
+  tasks.value.splice(index, 1);
 };
 </script>
 
