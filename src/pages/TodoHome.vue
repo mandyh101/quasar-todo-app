@@ -42,14 +42,11 @@
           </q-item>
         </q-list>
       </div>
+      <!-- TODO style dialog -->
       <q-dialog v-model="confirm" persistent>
         <q-card>
           <q-card-section class="row items-center">
-            <q-avatar
-              icon="signal_wifi_off"
-              color="primary"
-              text-color="white"
-            />
+            <q-avatar icon="delete" color="primary" text-color="white" />
             <span class="q-ml-sm">Delete this task?</span>
           </q-card-section>
 
