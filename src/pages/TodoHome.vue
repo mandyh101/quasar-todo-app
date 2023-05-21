@@ -27,8 +27,17 @@
             <q-item-section>
               <q-item-label>{{ task.title }}</q-item-label>
             </q-item-section>
-            <q-item-section v-if="task.done">
-              <q-button class="text-red-5" @click="deleteTask">X</q-button>
+            <q-item-section v-if="task.done" side>
+              <!-- TODO style button -->
+              <q-btn
+                flat
+                round
+                dense
+                color="primary"
+                class="text-red-5"
+                @click="deleteTask(task)"
+                icon="delete"
+              />
             </q-item-section>
           </q-item>
         </q-list>
