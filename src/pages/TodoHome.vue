@@ -1,5 +1,19 @@
 <template>
   <q-page class="q-pa-lg bg-grey-1 column">
+    <div class="row q-pa-sm bg-primary">
+      <q-input
+        v-model="newTask"
+        placeholder="Add task"
+        dense
+        square
+        class="col q-px-xs bg-white"
+        @keyup.enter="addTask(newTask)"
+      >
+        <template v-slot:append>
+          <q-btn round dense flat icon="add" @click="addTask(newTask)" />
+        </template>
+      </q-input>
+    </div>
     <div class="text-h4">Your tasks</div>
     <div class="q-pa-md">
       <div class="q-gutter-sm">
@@ -35,7 +49,7 @@
                 dense
                 color="primary"
                 class="text-red-5"
-                @click.stop="deleteTask(index)"
+                @click.stop="confirmDelete(index)"
                 icon="delete"
               />
             </q-item-section>
@@ -76,6 +90,7 @@ interface Task {
 }
 
 const confirm = ref(<boolean>false);
+let newTask = ref(<string>'');
 
 const tasks = ref(<Task[]>[
   {
@@ -92,30 +107,40 @@ const tasks = ref(<Task[]>[
   },
 ]);
 
+//mark task as done or todo
 const toggleTask = (task: Task) => {
   task.done = !task.done;
 };
 
+//confimr user wants to delete this task and delte on ok. Else do nothing.
 const confirmDelete = (index: number) => {
   $q.dialog({
     title: 'Confirm',
     message: 'Delete this task?',
     cancel: true,
     persistent: true,
-  })
-    .onOk(() => {
-      tasks.value.splice(index, 1);
-    })
-    .onCancel(() => {
-      // console.log('>>>> Cancel')
-    })
-    .onDismiss(() => {
-      // console.log('I am triggered on both OK and Cancel')
-    });
+  }).onOk(() => {
+    tasks.value.splice(index, 1);
+    showNotif();
+  });
 };
 
-const deleteTask = (index: number) => {
-  confirmDelete(index);
+//creates a new task using the string value passed from the add task input
+const addTask = (taskTitle: string) => {
+  tasks.value.push({
+    title: taskTitle,
+    done: false,
+  });
+  //clear input
+  newTask.value = '';
+};
+
+//shows a toast when note is successfully deleted
+const showNotif = () => {
+  $q.notify({
+    message: 'Task deleted',
+    color: 'primary',
+  });
 };
 </script>
 
