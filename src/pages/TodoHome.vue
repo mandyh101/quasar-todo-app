@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-lg bg-grey-1 column">
-    <div class="row q-pa-sm bg-primary">
+    <div class="q-pa-sm bg-primary">
       <q-input
         v-model="newTask"
         placeholder="Add task"
@@ -14,8 +14,8 @@
         </template>
       </q-input>
     </div>
-    <div class="text-h4">Your tasks</div>
-    <div class="q-pa-md">
+    <div class="q-pa-xs q-mt-md">
+      <div class="text-h5 q-mb-md">Your tasks</div>
       <div class="q-gutter-sm">
         <q-list separator class="bg-white">
           <!--
@@ -43,6 +43,7 @@
             </q-item-section>
             <q-item-section v-if="task.done" side>
               <!-- TODO style button -->
+              <!-- TODO add a delete all button or swpie effect -->
               <q-btn
                 flat
                 round
@@ -55,6 +56,10 @@
             </q-item-section>
           </q-item>
         </q-list>
+        <div v-if="!tasks.length" class="no-tasks absolute-center">
+          <q-icon name="check" size="100px" color="primary" />
+          <div class="text-h5 text-primary text-center">No tasks!</div>
+        </div>
       </div>
       <!-- TODO style dialog -->
       <q-dialog v-model="confirm" persistent>
@@ -70,10 +75,6 @@
           </q-card-actions>
         </q-card>
       </q-dialog>
-
-      <div class="q-px-sm q-mt-sm">
-        Your selection is: <strong>{{}}</strong>
-      </div>
     </div>
   </q-page>
 </template>
@@ -112,7 +113,7 @@ const toggleTask = (task: Task) => {
   task.done = !task.done;
 };
 
-//confimr user wants to delete this task and delte on ok. Else do nothing.
+//confirm user wants to delete this task and delte on ok. Else do nothing.
 const confirmDelete = (index: number) => {
   $q.dialog({
     title: 'Confirm',
@@ -150,5 +151,9 @@ const showNotif = () => {
     text-decoration: line-through;
     color: #bbb;
   }
+}
+
+.no-tasks {
+  opacity: 0.5;
 }
 </style>
