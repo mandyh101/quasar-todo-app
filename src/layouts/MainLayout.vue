@@ -29,7 +29,7 @@
       :breakpoint="600"
       overlay
       bordered
-      :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'"
+      :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-2'"
     >
       <div>
         <div
