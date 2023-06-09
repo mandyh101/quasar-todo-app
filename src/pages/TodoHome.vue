@@ -1,23 +1,30 @@
 <template>
-  <q-page class="q-pa-lg bg-grey-1 column">
-    <div class="q-pa-sm bg-primary">
+  <q-page class="q-pa-md bg-grey-2 column">
+    <div class="q-pa-sm">
       <q-input
         v-model="newTask"
-        placeholder="Add task"
-        dense
-        square
-        class="col q-px-xs bg-white"
+        label="Add task"
+        label-color="primary"
+        color="grey-5"
+        outlined
         @keyup.enter="addTask(newTask)"
       >
         <template v-slot:append>
-          <q-btn round dense flat icon="add" @click="addTask(newTask)" />
+          <q-btn
+            color="primary"
+            round
+            dense
+            flat
+            icon="add"
+            @click="addTask(newTask)"
+          />
         </template>
       </q-input>
     </div>
     <div class="q-pa-xs q-mt-md">
       <div class="text-h5 q-mb-md">Your tasks</div>
       <div class="q-gutter-sm">
-        <q-list separator class="bg-white">
+        <q-list separator class="bg-grey-2">
           <!--
         Rendering a <label> tag (notice tag="label")
         so QCheckboxes will respond to clicks on QItems to
@@ -32,11 +39,7 @@
             clickable
           >
             <q-item-section avatar>
-              <q-checkbox
-                v-model="task.done"
-                color="primary"
-                class="no-pointer-events"
-              />
+              <q-checkbox v-model="task.done" color="primary" />
             </q-item-section>
             <q-item-section>
               <q-item-label>{{ task.title }}</q-item-label>
@@ -122,6 +125,7 @@ const confirmDelete = (index: number) => {
     persistent: true,
   }).onOk(() => {
     tasks.value.splice(index, 1);
+
     showNotif();
   });
 };
@@ -132,6 +136,8 @@ const addTask = (taskTitle: string) => {
     title: taskTitle,
     done: false,
   });
+  //save the new tasks locally
+  // $q.localStorage.set('tasks', JSON.stringify(tasks));
   //clear input
   newTask.value = '';
 };
