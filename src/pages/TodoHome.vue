@@ -83,7 +83,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useQuasar } from 'quasar';
 
 const $q = useQuasar();
@@ -93,30 +93,12 @@ interface Task {
   done: boolean;
 }
 
-const confirm = ref(<boolean>false);
-let newTask = ref(<string>'');
+const confirm = ref(false);
+const newTask = ref('');
 
-const tasks = ref(<Task[]>[
-  {
-    title: 'Get bananas',
-    done: false,
-  },
-  {
-    title: 'Make cake with bananas',
-    done: true,
-  },
-  {
-    title: 'Eat banana cake',
-    done: false,
-  },
-]);
+const tasks = ref<Task[]>([]);
 
-//mark task as done or todo
-const toggleTask = (task: Task) => {
-  task.done = !task.done;
-};
-
-//confirm user wants to delete this task and delte on ok. Else do nothing.
+// Confirm user wants to delete this task and delete on ok. Else do nothing.
 const confirmDelete = (index: number) => {
   $q.dialog({
     title: 'Confirm',
@@ -130,25 +112,48 @@ const confirmDelete = (index: number) => {
   });
 };
 
-//creates a new task using the string value passed from the add task input
+// Creates a new task using the string value passed from the add task input
 const addTask = (taskTitle: string) => {
-  tasks.value.push({
+  const newTaskObj: Task = {
     title: taskTitle,
     done: false,
-  });
-  //save the new tasks locally
-  // $q.localStorage.set('tasks', JSON.stringify(tasks));
-  //clear input
+  };
+  tasks.value.push(newTaskObj);
+
+  // Save the new tasks locally
+  try {
+    $q.localStorage.set('tasks', tasks.value);
+    console.log(tasks.value);
+  } catch (e) {
+    console.log(e);
+  }
+
+  // Clear input
   newTask.value = '';
 };
 
-//shows a toast when note is successfully deleted
+const toggleTask = (task: Task) => {
+  task.done = !task.done;
+};
+
+// Shows a toast when a task is successfully deleted
 const showNotif = () => {
   $q.notify({
     message: 'Task deleted',
     color: 'primary',
   });
 };
+
+onMounted(() => {
+  // $q.localStorage.remove('tasks');
+
+  const storedTasksJson = $q.localStorage.getItem('tasks');
+  if (storedTasksJson) {
+    const storedTasks: Task[] = storedTasksJson as Task[];
+    tasks.value = storedTasks;
+    console.log(tasks.value);
+  }
+});
 </script>
 
 <style lang="scss">
