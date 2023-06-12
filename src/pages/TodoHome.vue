@@ -98,18 +98,9 @@ const newTask = ref('');
 
 const tasks = ref<Task[]>([]);
 
-// Confirm user wants to delete this task and delete on ok. Else do nothing.
-const confirmDelete = (index: number) => {
-  $q.dialog({
-    title: 'Confirm',
-    message: 'Delete this task?',
-    cancel: true,
-    persistent: true,
-  }).onOk(() => {
-    tasks.value.splice(index, 1);
-
-    showNotif();
-  });
+//used to show a task as complete or todo
+const toggleTask = (task: Task) => {
+  task.done = !task.done;
 };
 
 // Creates a new task using the string value passed from the add task input
@@ -132,8 +123,19 @@ const addTask = (taskTitle: string) => {
   newTask.value = '';
 };
 
-const toggleTask = (task: Task) => {
-  task.done = !task.done;
+// Confirm user wants to delete this task and delete on ok. Else do nothing.
+const confirmDelete = (index: number) => {
+  $q.dialog({
+    title: 'Confirm',
+    message: 'Delete this task?',
+    cancel: true,
+    persistent: true,
+  }).onOk(() => {
+    tasks.value.splice(index, 1); //delete from the frontend tasks array
+    $q.localStorage.set('tasks', tasks.value); //set the data in the tasks key in local storage to match the updated tasks array.
+
+    showNotif();
+  });
 };
 
 // Shows a toast when a task is successfully deleted
@@ -146,7 +148,6 @@ const showNotif = () => {
 
 onMounted(() => {
   // $q.localStorage.remove('tasks');
-
   const storedTasksJson = $q.localStorage.getItem('tasks');
   if (storedTasksJson) {
     const storedTasks: Task[] = storedTasksJson as Task[];
