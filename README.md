@@ -1,4 +1,4 @@
-# Quasar App (quasar-todo-app)
+# Quasar App (quasar-todo-app) - PWA
 
 A todo app to help you focus when you're feeling distracted, overwhelmed or unproductive.
 
